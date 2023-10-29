@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { articleService } from '@/service';
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'home-index',
@@ -15,7 +16,7 @@ export default {
     ...mapMutations(['increment']),
   },
   created() {
-    console.log('### this ###');
+    articleService.fetchArticles();
   },
 };
 </script>
