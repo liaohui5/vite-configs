@@ -1,15 +1,5 @@
-import Vuex from "vuex";
-import Vue from "vue";
+import { createPinia } from 'pinia';
 
-Vue.use(Vuex);
+export const store = createPinia();
 
-export const store = new Vuex.Store({
-  state: {
-    count: 0,
-  },
-  mutations: {
-    increment(state) {
-      state.count += 1;
-    },
-  },
-});
+export * from './useCounterStore';

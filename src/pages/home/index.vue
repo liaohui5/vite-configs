@@ -1,24 +1,15 @@
 <template lang="pug">
 .home
-  .text veux store count value is:{{ count }}
-  button(@click="increment") increment count
+  .text veux store count value is:{{ counterStore.count }}
+  button(@click="counterStore.increment") increment count
 </template>
 
-<script>
+<script setup>
+import { onMounted } from 'vue';
+import { useCounterStore } from '@/store';
 import { articleService } from '@/service';
-import { mapState, mapMutations } from 'vuex';
-export default {
-  name: 'home-index',
-  computed: {
-    ...mapState(['count']),
-  },
-  methods: {
-    ...mapMutations(['increment']),
-  },
-  created() {
-    articleService.fetchArticles();
-  },
-};
+const counterStore = useCounterStore();
+onMounted(async () => await articleService.fetchArticles());
 </script>
 
 <style lang="scss" scoped></style>

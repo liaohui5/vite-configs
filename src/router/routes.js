@@ -1,15 +1,15 @@
-import { ROUTE_NAMES } from "./const";
-import Home from "@/pages/home/index.vue";
-import About from "@/pages/about/index.vue";
+import { ROUTE_NAMES } from './const';
+import Home from '@/pages/home/index.vue';
+import About from '@/pages/about/index.vue';
 
 export const routes = [
   {
-    path: "/home",
+    path: '/home',
     name: ROUTE_NAMES.HOME,
     component: Home,
   },
   {
-    path: "/about",
+    path: '/about',
     name: ROUTE_NAMES.ABOUT,
     component: About,
   },
