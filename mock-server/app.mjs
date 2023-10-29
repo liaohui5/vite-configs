@@ -2,17 +2,18 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express-next';
 import { readdirSync } from 'fs';
-import { dirname, resolve } from 'path';
-import { fileURLToPath } from 'node:url';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const config = {
   port: 3333,
-  prefix: '/api',
+  prefix: '',
+  mockSuffix: '.mjs',
   mockPath: './mocks',
   cors: true,
   responseWrapper: function (_req, res, data = null) {
     res.json({
-      code: 0,
+      code: 200,
       msg: 'success',
       data,
     });
@@ -20,7 +21,7 @@ const config = {
 };
 
 const app = express();
-const { port, mockPath, prefix, cors: enableCors, responseWrapper } = config;
+const { port, mockPath, prefix, mockSuffix, cors: enableCors, responseWrapper } = config;
 
 // apply middlewares
 app.use(bodyParser.json());
@@ -33,12 +34,18 @@ app.get('/', (req, res) => responseWrapper(req, res));
 function importMocks() {
   const __dirname = dirname(fileURLToPath(import.meta.url));
   readdirSync(resolve(__dirname, mockPath)).forEach(async (item) => {
-    const modeule = await import(`./${mockPath}/${item}`);
-    addRoutes(modeule.default);
+    if (!item.endsWith(mockSuffix)) {
+      return;
+    }
+    const mockModule = await import(`./${mockPath}/${item}`);
+    addRoutes(mockModule.default);
   });
 }
 
 function addRoutes(mocks) {
+  if (!Array.isArray(mocks)) {
+    return;
+  }
   for (let i = 0, l = mocks.length; i < l; i++) {
     const item = mocks[i];
     if (!isMock(item)) {
@@ -68,14 +75,18 @@ function isMock(mock) {
   return ['url', 'response'].every((key) => mock.hasOwnProperty(key));
 }
 
+// trim slash
+function trimURL(url) {
+  const target = `${prefix}/${url}`
+    .split('/')
+    .filter((item) => item)
+    .join('/');
+  return `/${target}`;
+}
+
 function resetMock(mock) {
   // handle url format: /api//articles -> /api/articles
-  mock.url =
-    '/' +
-    `${prefix}/${mock.url}`
-      .split('/')
-      .filter((item) => item)
-      .join('/');
+  mock.url = trimURL(mock.url);
 
   // method & timeout default values
   if (!mock.hasOwnProperty('method')) {
@@ -103,3 +114,4 @@ function wait(ms) {
 
 importMocks();
 app.listen(port, () => `server started on: http://localhost:${port}`);
+

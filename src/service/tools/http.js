@@ -12,13 +12,23 @@ export const http = axios.create({
 
 http.interceptors.request.use((config) => {
   console.log('### request ###', config.url);
+  if (hasToken()) {
+    // TODO: 根据实际需求设置
+    config.headers['Authorization'] = getToken();
+  }
   return config;
 });
 
-http.interceptors.response.use((response) => {
-  const body = response.data;
-  if (body.code === 0) {
-    return body.data;
-  }
-  return Promise.reject(response);
-}, errorHandler);
+http.interceptors.response.use(
+  (response) => {
+    const body = response.data;
+    if (body.code === 0) {
+      return body.data;
+    }
+    return Promise.reject(response);
+  },
+  (err) => {
+    errorHandler(err);
+    return Promise.reject(err);
+  },
+);
