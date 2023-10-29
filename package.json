@@ -1,0 +1,23 @@
+{
+  "name": "vite-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite . --port=8080"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vitejs/plugin-vue2": "^2.2.0",
+    "vue": "2",
+    "vue-router": "3",
+    "vuex": "3"
+  },
+  "devDependencies": {
+    "pug": "^3.0.2",
+    "sass": "^1.69.5",
+    "vite": "^4.5.0"
+  }
+}
