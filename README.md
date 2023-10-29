@@ -5,7 +5,6 @@
 - vue2: vue(2.x) + vue-router(3.x) + vuex(3.x)
 - vue3: vue(3.x) + vue-router(4.x) + pinia(2.x)
 - vue3ts: vue(3.x) + vue-rotuer(4.x) + pinia(2.x) + typescript(5.x) + vitest(1.x)
-- react: react(18) + react-router(6.x) + redux(4.x)
 
 所有模板都会包含 mock-server/axios
 
@@ -22,12 +21,12 @@ npm i -g degit
 - vue2
 - vue3
 - vue3ts
-- react
 
 ```sh
 # degit liaohui5/vite-config#模板分支名
 degit liaohui5/vite-config#vue2
 degit liaohui5/vite-config#vue3
+degit liaohui5/vite-config#vue3ts
 ```
 
 ## 启动服务
@@ -42,3 +41,4 @@ npm run dev
 # 3. 启动 mock-server 模拟服务器
 npm run mock
 ```
+
