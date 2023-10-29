@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "vite . --port=8080"
+    "dev": "vite . --mode=development --port=8080",
+    "mock": "nodemon ./mock-server/app.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@vitejs/plugin-vue2": "^2.2.0",
+    "axios": "^1.6.0",
     "vue": "2",
     "vue-router": "3",
     "vuex": "3"
@@ -18,6 +20,11 @@
   "devDependencies": {
     "pug": "^3.0.2",
     "sass": "^1.69.5",
-    "vite": "^4.5.0"
+    "vite": "^4.5.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express-next": "^0.0.2",
+    "mockjs": "^1.1.0",
+    "nodemon": "^3.0.1"
   }
 }
